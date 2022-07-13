@@ -1,4 +1,6 @@
-
+div.base{
+    display: block;
+}
 
 div.reels{
     position: relative;
