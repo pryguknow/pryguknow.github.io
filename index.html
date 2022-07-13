@@ -3,19 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Payouts</title>
+    <link href="index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div id="reels">
-    <div class="">
-        <p>
-            Specify the number of reels.
-        </p>
-        <div>gadasdas</div>
+<h1>Payouts</h1>
+<div class="base">
+    <div class="reels">
+        <form class="reelsForm">
+            <p>Specify the number of reels and the number of symbols on the reel .</p>
+            <p><input type="text" name="reelsNumber" size="23" placeholder="Enter the number of reels"></p>
+            <p><input type="text" name="symbolsNumber" size="23" placeholder="Enter the number symbols"></p>
+            <p><button type="submit" class="enterReels">Enter</button></p>
+        </form>
+    </div>
+    <div class="symbols">
+        <form>
+            <p>Enter symbols (separated by commas)</p>
+            <p><input type="text" name="symbols" size="30" placeholder="Example: J, S, G"></p>
+            <p><button type="submit" class="enterSymbol">Enter</button></p>
+        </form>
     </div>
 </div>
-<div id="symbols"></div>
-<div id="winlines"></div>
-<div id="result"></div>
+
 <script src="../script/index.js"></script>
 </body>
 </html>
