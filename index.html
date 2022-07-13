@@ -9,23 +9,21 @@
 
 <div class="base">
     <h1>Payouts</h1>
-    <div class="reels">
+    <div id="reels">
         <form class="reelsForm">
-            <p>Specify the number of reels and the number of symbols on the reel .</p>
-            <p><input type="text" name="reelsNumber" size="23" placeholder="Enter the number of reels"></p>
-            <p><input type="text" name="symbolsNumber" size="23" placeholder="Enter the number symbols"></p>
-            <p><button type="submit" class="enterReels">Enter</button></p>
+            <p>Enter the number of reels:</p>
+            <p><input id="reelsText" type="number" min="1" name="reelsNumber" placeholder="Number of reels"></p>
+            <p>Enter number of symbols on the reel</p>
+            <p><input id="symbolsNumber" type="number" min="1" name="symbolsNumber" placeholder="Number symbols"></p>
+            <p>Enter symbols (separated by commas)</p>
+            <p><input id="symbol" type="text" name="symbolsText" size="30" placeholder="Example: J, S, G"></p>
+            <p><button type="submit" class="enter">Enter</button></p>
         </form>
     </div>
-    <div class="symbols">
-        <form>
-            <p>Enter symbols (separated by commas)</p>
-            <p><input type="text" name="symbols" size="30" placeholder="Example: J, S, G"></p>
-            <p><button type="submit" class="enterSymbol">Enter</button></p>
-        </form>
+    <div class="winLine">
     </div>
 </div>
 
-<script src="../script/index.js"></script>
+<script src="project_js/index.js"></script>
 </body>
 </html>
