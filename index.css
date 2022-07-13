@@ -1,0 +1,29 @@
+
+
+div.reels{
+    position: relative;
+    background-color: blue;
+    border: 2px solid darkblue;
+    height: 190px;
+    width: 300px;
+    text-align:center;
+}
+div.symbols{
+    position: absolute;
+    background-color: blue;
+    border: 2px solid darkblue;
+    height: 100px;
+    width: 300px;
+    text-align:center;
+
+}
+form{
+    text-align:center;
+}
+
+div{
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: middle;
+    position: relative
+}
