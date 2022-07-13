@@ -1,31 +1,30 @@
+div.logo1{
+    height: 500px;
+    width: 300px;
+    margin-left: 5px;
+    /*background-color: #ebebeb;*/
+    float: left;
+}
+
 div.base{
     display: block;
-}
-
-div.reels{
+    height: 500px;
     position: relative;
-    background-color: blue;
-    border: 2px solid darkblue;
-    height: 190px;
-    width: 300px;
-    text-align:center;
-}
-div.symbols{
-    position: absolute;
-    background-color: blue;
-    border: 2px solid darkblue;
-    height: 100px;
-    width: 300px;
-    text-align:center;
 
+}
+
+div[id="reels"]{
+    background-color: lavender;
+    border: 2px solid darkblue;
+    height: 400px;
+    width: 300px;
+    text-align:center;
+    margin-right: 100px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%)
 }
 form{
     text-align:center;
 }
 
-div{
-    min-height: 10em;
-    display: table-cell;
-    vertical-align: middle;
-    position: relative
-}
