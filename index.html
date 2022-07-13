@@ -6,25 +6,29 @@
     <link href="index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<h1>Payouts</h1>
 <div class="base">
-    <div class="reels">
+    <div class="logo1">
+        <img>
+    </div>
+    <div id="reels">
+        <h1>Payouts</h1>
         <form class="reelsForm">
-            <p>Specify the number of reels and the number of symbols on the reel .</p>
-            <p><input type="text" name="reelsNumber" size="23" placeholder="Enter the number of reels"></p>
-            <p><input type="text" name="symbolsNumber" size="23" placeholder="Enter the number symbols"></p>
-            <p><button type="submit" class="enterReels">Enter</button></p>
+            <p>Enter the number of reels:</p>
+            <p><input id="reelsText" type="number" min="1" placeholder="Number of reels"></p>
+            <p>Enter number of symbols on the reel</p>
+            <p><input id="symbolsNumber" type="number" min="1" placeholder="Number of symbols"></p>
+            <p>Enter number of win lines</p>
+            <p><input id="winLinesText" type="number" placeholder="Number of win lines"></p>
+            <p>Enter symbols (separated by commas)</p>
+            <p><input id="symbol" type="text" size="30" placeholder="Example: J, S, G"></p>
+            <p><button type="submit" class="enter">Enter</button></p>
         </form>
     </div>
-    <div class="symbols">
-        <form>
-            <p>Enter symbols (separated by commas)</p>
-            <p><input type="text" name="symbols" size="30" placeholder="Example: J, S, G"></p>
-            <p><button type="submit" class="enterSymbol">Enter</button></p>
-        </form>
     </div>
 </div>
 
-<script src="../script/index.js"></script>
+
+<h6>v.0.0.1</h6>
+<script src="project_js/BaseLogic.js"></script>
 </body>
 </html>
