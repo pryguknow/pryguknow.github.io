@@ -4,19 +4,20 @@ const divReels = document.getElementById('reels');
 const reelsNumberText = document.getElementById('reelsText');
 const symbolsNumberText = document.getElementById('symbolsNumber');
 const symbolsText = document.getElementById('symbol');
-const winLinesText = document.getElementById('winLinesText')
+let winLinesText = document.getElementById('winLinesText')
 const enterParametersButton = document.querySelector(`[class="enter"]`);
 const baseDiv = document.querySelector('.base');
 
 
 
 const div = document.createElement('div');
-const btn = document.createElement('button');
+let btn = document.createElement('button');
+const headCounter = document.createElement('div');
 let amountReels = 0;
 let amountSymbols = 0;
 let amountWinLines = 0;
 let allSymbols;
-const winSymbol = []
+let winSymbol = []
 const allWinLines = [];
 
 
@@ -26,7 +27,7 @@ enterParametersButton.addEventListener('click', (e) =>{
        amountReels = reelsNumberText.value;
        amountSymbols = symbolsNumberText.value;
        allSymbols = symbolsText.value;
-       allSymbols = winLinesText.value;
+       amountWinLines = winLinesText.value;
 
 
        divReels.remove();
@@ -35,7 +36,14 @@ enterParametersButton.addEventListener('click', (e) =>{
        div.style.display = "table"
        baseDiv.append(div);
 
+       headCounter.classList.add('counter');
+       headCounter.style.display = "table";
+       headCounter.textContent = `You need to choose ${amountWinLines} wining lines.`;
+       div.append(headCounter);
+
 //create win lines tab
+
+
        for (let y = 0; y < amountSymbols; y++){
            createNewDiv(`symbol${y}`, div, "block", false);
            for (let x = 0; x < amountReels; x++){
@@ -50,7 +58,7 @@ enterParametersButton.addEventListener('click', (e) =>{
 
        const winLineButtons = document.querySelectorAll('.winLineButtons');
        winLineButtons.forEach(btn => {
-           btn.addEventListener('click', (e) => {
+           btn.addEventListener('click', () => {
               btn.style.backgroundColor = 'red';
               const y = btn.y;
               const x = btn.x;
@@ -58,17 +66,39 @@ enterParametersButton.addEventListener('click', (e) =>{
               console.log(winSymbol);
             })
        })
-        btn.addEventListener('submit', (e) => {
-            e.preventDefault();
 
-            allWinLines.push(winSymbol);
+
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (winSymbol.length) {
+                let varWinSymbol = [];
+                winSymbol.forEach(item => {
+                    varWinSymbol.push(item);
+                })
+                allWinLines.push(varWinSymbol);
+                console.log(allWinLines);
+                winSymbol = [];
+                --amountWinLines;
+                winLineButtons.forEach(btn => {
+                    btn.style.backgroundColor = "yellow";
+                })
+                if (amountWinLines === 0){
+                    div.remove();
+                    btn.remove();
+                }
+            } else {
+                    alert("You need to choose a wining line")
+                }
         })
 
-       //console.log(document.querySelector(".x3y1").y);
     } else {
         alert("Нou have an empty field!");
     }
 })
+
+
+
+
 
 function createNewDiv(divClassList, appendDiv, divDisplay, btn, x, y) {
     let div = document.createElement('div');
