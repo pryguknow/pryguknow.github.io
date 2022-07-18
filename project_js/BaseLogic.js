@@ -16,8 +16,6 @@ const div = document.createElement('div');
 let btn = document.createElement('button');
 const headCounter = document.createElement('div');
 let resultDiv = document.createElement('div');
-//let amountReels = 0;
-//let amountSymbols = 0;
 let amountWinLines = 0;
 let allSymbols;
 let selectedWinLine = []
@@ -31,8 +29,6 @@ let resultSymbolsSuite;
 enterParametersButton.addEventListener('click', (e) =>{
     e.preventDefault();
     if (reelsNumberText.value && symbolsNumberText.value && symbolsText.value && winLinesText.value) {
-       //amountReels = reelsNumberText.value;
-       //amountSymbols = symbolsNumberText.value;
        amountWinLines = winLinesText.value;
        lineSize["width"] = +reelsNumberText.value;
        lineSize["height"] = +symbolsNumberText.value;
@@ -74,7 +70,6 @@ enterParametersButton.addEventListener('click', (e) =>{
               const y = btn.y;
               const x = btn.x;
               selectedWinLine.push(x, y);
-              //console.log(selectedWinLine);
             })
        })
 
@@ -87,7 +82,6 @@ enterParametersButton.addEventListener('click', (e) =>{
                     varWinSymbol.push(item);
                 })
                 allWinLines.push(varWinSymbol);
-                //console.log(allWinLines);
                 selectedWinLine = [];
                 --amountWinLines;
                 winLineButtons.forEach(btn => {
@@ -98,14 +92,12 @@ enterParametersButton.addEventListener('click', (e) =>{
                     btn.remove();
 
 
-                    resultSymbols = createFinishWinSymbols(lineSize, allWinLines, allSymbols);
-
-                    console.log(resultSymbols)
-
                     resultDiv.classList.add('result');
                     resultDiv.style.display = "table";
                     baseDiv.append(resultDiv);
 
+
+                    resultSymbols = createFinishWinSymbols(lineSize, allWinLines, allSymbols);
                     let resultString = '';
                     resultSymbols.forEach(cheat => {
                         resultString = '';
@@ -113,23 +105,15 @@ enterParametersButton.addEventListener('click', (e) =>{
                             resultString += s.join('') + ' '
                         });
                         resultString = resultString.trim();
-                       //createNewDiv("resultWinSymbols", '.result', "block", false, false, false, resultString)
                         resultSymbolsSuite = document.createElement('input');
                         resultSymbolsSuite.classList.add("text");
                         resultSymbolsSuite.style.display = "table";
                         resultSymbolsSuite.style.width = `${(lineSize.height * 11)*lineSize.width}px`
                         resultDiv.append(resultSymbolsSuite);
-                        //console.log(resultString);
                         resultSymbolsSuite.value = resultString;
-
-                        //resultSymbolsSuite.value += 'test <br>';
-
-
-
-                        //console.log(resultString);
                     });
 
-                    //resultDiv.textContent = resultSymbols;
+
                 }
             } else {
                     alert("You need to choose a wining line")
@@ -167,9 +151,6 @@ function createNewDiv(divClassList, appendDiv, divDisplay, btn, x, y) {
 
 function createFinishWinSymbols(linesSizes, winLines, symbols) {
     const results = [];
-    // console.log(linesSizes);
-    // console.log(winLines);
-    // console.log(symbols);
 
     symbols.forEach((s, i, arr) => {
         winLines.forEach((line) => {
@@ -193,21 +174,10 @@ function createFinishWinSymbols(linesSizes, winLines, symbols) {
                 cheatArray[line[m]][line[m + 1]] = s;
             }
             results.push(cheatArray);
-            console.log(cheatArray);
+
         });
     });
-
-    //console.log(results);
     return results
-
-    // results.forEach(cheat => {
-    //     let resultString = '';
-    //     cheat.forEach(s => {
-    //         resultString += s.join('') + ' '
-    //     });
-    //     resultString = resultString.trim();
-    //     console.log(resultString);
-    // })
 }
 
 
