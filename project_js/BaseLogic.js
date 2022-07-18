@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 const divReels = document.getElementById('reels');
 const reelsNumberText = document.getElementById('reelsText');
 const symbolsNumberText = document.getElementById('symbolsNumber');
@@ -14,8 +16,8 @@ const div = document.createElement('div');
 let btn = document.createElement('button');
 const headCounter = document.createElement('div');
 let resultDiv = document.createElement('div');
-let amountReels = 0;
-let amountSymbols = 0;
+//let amountReels = 0;
+//let amountSymbols = 0;
 let amountWinLines = 0;
 let allSymbols;
 let selectedWinLine = []
@@ -29,8 +31,8 @@ let resultSymbolsSuite;
 enterParametersButton.addEventListener('click', (e) =>{
     e.preventDefault();
     if (reelsNumberText.value && symbolsNumberText.value && symbolsText.value && winLinesText.value) {
-       amountReels = reelsNumberText.value;
-       amountSymbols = symbolsNumberText.value;
+       //amountReels = reelsNumberText.value;
+       //amountSymbols = symbolsNumberText.value;
        amountWinLines = winLinesText.value;
        lineSize["width"] = +reelsNumberText.value;
        lineSize["height"] = +symbolsNumberText.value;
@@ -53,9 +55,9 @@ enterParametersButton.addEventListener('click', (e) =>{
 //create win lines tab
 
 
-       for (let y = 0; y < amountSymbols; y++){
+       for (let y = 0; y < lineSize.height; y++){
            createNewDiv(`symbol${y}`, div, "block", false, false, false, false);
-           for (let x = 0; x < amountReels; x++){
+           for (let x = 0; x < lineSize.width; x++){
                createNewDiv(`winLineButtons`, `.symbol${y}`, "table", true, x, y, false);
            }
        }
@@ -72,7 +74,7 @@ enterParametersButton.addEventListener('click', (e) =>{
               const y = btn.y;
               const x = btn.x;
               selectedWinLine.push(x, y);
-              console.log(selectedWinLine);
+              //console.log(selectedWinLine);
             })
        })
 
@@ -85,7 +87,7 @@ enterParametersButton.addEventListener('click', (e) =>{
                     varWinSymbol.push(item);
                 })
                 allWinLines.push(varWinSymbol);
-                console.log(allWinLines);
+                //console.log(allWinLines);
                 selectedWinLine = [];
                 --amountWinLines;
                 winLineButtons.forEach(btn => {
@@ -104,25 +106,30 @@ enterParametersButton.addEventListener('click', (e) =>{
                     resultDiv.style.display = "table";
                     baseDiv.append(resultDiv);
 
-                    resultSymbols.forEach((cheat, i) => {
-                        let resultString = '';
+                    let resultString = '';
+                    resultSymbols.forEach(cheat => {
+                        resultString = '';
                         cheat.forEach(s => {
                             resultString += s.join('') + ' '
                         });
                         resultString = resultString.trim();
-                       createNewDiv("resultWinSymbols", '.result', "block", false, false, false, resultString)
-                            // resultSymbolsSuite = document.createElement('div');
-                            // resultSymbolsSuite.classList.add("resultWinSymbols");
-                            // resultSymbolsSuite.style.display = "table";
-                            // resultDiv.append(resultSymbolsSuite);
-                            // console.log(resultString);
-                            // resultSymbolsSuite.textContent += resultString;
+                       //createNewDiv("resultWinSymbols", '.result', "block", false, false, false, resultString)
+                        resultSymbolsSuite = document.createElement('input');
+                        resultSymbolsSuite.classList.add("text");
+                        resultSymbolsSuite.style.display = "table";
+                        resultSymbolsSuite.style.width = `${(lineSize.height * 11)*lineSize.width}px`
+                        resultDiv.append(resultSymbolsSuite);
+                        //console.log(resultString);
+                        resultSymbolsSuite.value = resultString;
+
+                        //resultSymbolsSuite.value += 'test <br>';
 
 
 
                         //console.log(resultString);
                     });
-                    resultDiv.textContent = resultSymbols;
+
+                    //resultDiv.textContent = resultSymbols;
                 }
             } else {
                     alert("You need to choose a wining line")
@@ -136,18 +143,13 @@ enterParametersButton.addEventListener('click', (e) =>{
 
 
 
-function createNewDiv(divClassList, appendDiv, divDisplay, btn, x, y, text) {
+function createNewDiv(divClassList, appendDiv, divDisplay, btn, x, y) {
     let div = document.createElement('div');
     div.classList.add(divClassList);
     div.style.display = divDisplay;
-    if (text) {
-        appendDiv.append(div);
-        div.textContent = text;
-        return console.log("done");
-    }
+    div.style.height = "40px";
     if (btn) {
         div.style.width = "40px";
-        div.style.height = "40px";
         div.style.backgroundColor = "yellow";
         div.style.float = "left";
         div.style.border = "1px solid darkblue"
@@ -156,8 +158,7 @@ function createNewDiv(divClassList, appendDiv, divDisplay, btn, x, y, text) {
         document.querySelector(appendDiv).append(div);
     } else {
         appendDiv.append(div);
-        div.style.width = `${amountReels * 42}px`;
-        div.style.height = "40px";
+        div.style.width = `${lineSize.width * 42}px`;
         div.style.backgroundColor = "yellow";
 
     }
@@ -192,6 +193,7 @@ function createFinishWinSymbols(linesSizes, winLines, symbols) {
                 cheatArray[line[m]][line[m + 1]] = s;
             }
             results.push(cheatArray);
+            console.log(cheatArray);
         });
     });
 
@@ -207,6 +209,7 @@ function createFinishWinSymbols(linesSizes, winLines, symbols) {
     //     console.log(resultString);
     // })
 }
+
 
 
 
