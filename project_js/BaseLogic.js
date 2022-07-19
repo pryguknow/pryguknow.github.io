@@ -1,60 +1,48 @@
 'use strict';
 
+
+const firstPayoutsPage = new FirstPayoutsPage;
 const divReels = document.getElementById('reels');
-const reelsNumberText = document.getElementById('reelsText');
-const symbolsNumberText = document.getElementById('symbolsNumber');
-const symbolsText = document.getElementById('symbol');
-let winLinesText = document.getElementById('winLinesText')
 const enterParametersButton = document.querySelector(`[class="enter"]`);
 const baseDiv = document.querySelector('.base');
-
-
-
-const div = document.createElement('div');
-let btn = document.createElement('button');
-const headCounter = document.createElement('div');
-let amountReels = 0;
-let amountSymbols = 0;
-let amountWinLines = 0;
-let allSymbols;
-let winSymbol = []
 const allWinLines = [];
+
+let createWinLinesDiv;
+let createWinLinesY;
+let createWinLinesX;
+let selectedWinLine = []
+let resultSymbols;
+let resultSymbolsSuite;
+
+
 
 
 enterParametersButton.addEventListener('click', (e) =>{
     e.preventDefault();
-    if (reelsNumberText.value && symbolsNumberText.value && symbolsText.value && winLinesText.value) {
-       amountReels = reelsNumberText.value;
-       amountSymbols = symbolsNumberText.value;
-       allSymbols = symbolsText.value;
-       amountWinLines = winLinesText.value;
-
-
+    firstPayoutsPage.upDateInputInformation();
+    if (firstPayoutsPage.lineSize.width&& firstPayoutsPage.lineSize.height && firstPayoutsPage.symbols && firstPayoutsPage.amountWinLines) {
        divReels.remove();
 
-       div.classList.add('winLines');
-       div.style.display = "table"
-       baseDiv.append(div);
+       createWinLinesDiv = new CreateElement('div', 'winLines', "table", baseDiv);
+        const div = createWinLinesDiv.createElement();
+        let countText = `You need to select ${firstPayoutsPage.amountWinLines} wining lines`;
+        const createCountDiv = new CreateElement('div', "headCounter", "block", document.querySelector(div), countText);
+        let headCounter = createCountDiv.createElement();
 
-       headCounter.classList.add('counter');
-       headCounter.style.display = "table";
-       headCounter.textContent = `You need to choose ${amountWinLines} wining lines.`;
-       div.append(headCounter);
+        for (let y = 0; y < firstPayoutsPage.lineSize.height; y++){
+            createWinLinesY = new CreateWinLines(`symbol${y}`, div, "block", false, false);
+            createWinLinesY.createWinLines();
+            for (let x = 0; x < firstPayoutsPage.lineSize.width; x++){
+                createWinLinesX = new CreateWinLines(`winLineButtons`, `.symbol${y}`, "table", x, y);
+                createWinLinesX.createWinLines();
+            }
+        }
 
-//create win lines tab
 
-
-       for (let y = 0; y < amountSymbols; y++){
-           createNewDiv(`symbol${y}`, div, "block", false);
-           for (let x = 0; x < amountReels; x++){
-               createNewDiv(`winLineButtons`, `.symbol${y}`, "table", true, x, y);
-           }
-       }
 // Create submit button
-       btn.style.display = "table";
-       btn.classList.add('submit');
-       btn.textContent = "Enter";
-       baseDiv.append(btn);
+        const createBtnElement = new CreateElement('button', 'submit', "table", baseDiv, "Enter");
+        const btnElement = createBtnElement.createElement();
+
 
        const winLineButtons = document.querySelectorAll('.winLineButtons');
        winLineButtons.forEach(btn => {
@@ -62,29 +50,57 @@ enterParametersButton.addEventListener('click', (e) =>{
               btn.style.backgroundColor = 'red';
               const y = btn.y;
               const x = btn.x;
-              winSymbol.push(x, y);
-              console.log(winSymbol);
+              selectedWinLine.push(x, y);
             })
        })
 
 
-        btn.addEventListener('click', (e) => {
+        document.querySelector(btnElement).addEventListener('click', (e) => {
             e.preventDefault();
-            if (winSymbol.length) {
+            let count = 0;
+            if (selectedWinLine.length) {
                 let varWinSymbol = [];
-                winSymbol.forEach(item => {
+                selectedWinLine.forEach(item => {
                     varWinSymbol.push(item);
                 })
                 allWinLines.push(varWinSymbol);
-                console.log(allWinLines);
-                winSymbol = [];
-                --amountWinLines;
+                selectedWinLine = [];
+                --firstPayoutsPage.amountWinLines;
+                document.querySelector(headCounter).textContent = `${firstPayoutsPage.amountWinLines} winning lines to choose`;
                 winLineButtons.forEach(btn => {
                     btn.style.backgroundColor = "yellow";
                 })
-                if (amountWinLines === 0){
-                    div.remove();
-                    btn.remove();
+                if (firstPayoutsPage.amountWinLines === 0){
+                    document.querySelector(div).remove();
+                    document.querySelector(btnElement).remove();
+                    const createDivElement = new CreateElement('div', 'result', 'table', baseDiv);
+                    const resultDiv = createDivElement.createElement();
+
+
+                    const finaleResult = new FinalePayoutsPage(firstPayoutsPage.lineSize, allWinLines, firstPayoutsPage.correctSymbols)
+                    resultSymbols = finaleResult.resultCalculation();
+
+                    let resultString = '';
+
+                    resultSymbols.forEach(cheat => {
+                        resultString = '';
+                        cheat.forEach(s => {
+                            resultString += s.join('') + ' '
+                        });
+                        resultString = resultString.trim();
+                        console.log(resultString)
+
+                        const createInputElm = new CreateElement('input', `text${count}`, "table", document.querySelector(resultDiv), false);
+                        resultSymbolsSuite = createInputElm.createElement();
+
+                        document.querySelector(resultSymbolsSuite).style.width = `${(firstPayoutsPage.lineSize.height * 11)*firstPayoutsPage.lineSize.width}px`
+                        document.querySelector(resultDiv).append(document.querySelector(resultSymbolsSuite));
+                        document.querySelector(resultSymbolsSuite).value = resultString;
+
+                        count++;
+                    });
+
+
                 }
             } else {
                     alert("You need to choose a wining line")
@@ -97,28 +113,6 @@ enterParametersButton.addEventListener('click', (e) =>{
 })
 
 
-
-
-
-function createNewDiv(divClassList, appendDiv, divDisplay, btn, x, y) {
-    let div = document.createElement('div');
-    div.classList.add(divClassList);
-    div.style.display = divDisplay;
-    div.style.height = "40px";
-    if (btn){
-        div.style.width = "40px";
-        div.style.backgroundColor = "yellow";
-        div.style.float = "left";
-        div.style.border = "1px solid darkblue"
-        div.x = x;
-        div.y = y;
-        document.querySelector(appendDiv).append(div);
-    }else{
-        appendDiv.append(div);
-        div.style.width = `${amountReels * 42}px`;
-        div.style.backgroundColor = "yellow";
-    }
-}
 
 
 
