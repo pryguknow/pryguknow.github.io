@@ -43,30 +43,26 @@ enterParametersButton.addEventListener('click', (e) =>{
         const createBtnElement = new CreateElement('button', 'submit', "table", baseDiv, "Enter");
         const btnElement = createBtnElement.createElement();
 
-
        const winLineButtons = document.querySelectorAll('.winLineButtons');
        winLineButtons.forEach(btn => {
            btn.addEventListener('click', () => {
-               //btn.count++;
                btn.style.backgroundColor === 'yellow' ? btn.style.backgroundColor = 'red': btn.style.backgroundColor = 'yellow';
-               // if (btn.count % 2 === 0) {
-               //     btn.style.backgroundColor = 'red';
-               //     // const y = btn.y;
-               //     // const x = btn.x;
-               //     // selectedWinLine.push(x, y);
-               //     // console.log(selectedWinLine);
-               //     // console.log(btn.count);
-               // } else {
-               //     btn.style.backgroundColor = 'yellow';
-               //     // selectedWinLine.pop();
-               //     // selectedWinLine.pop();
-               //     // console.log(selectedWinLine);
-               //     // console.log(btn.count);
-               // }
-
             })
        })
 
+
+        const createCancelButton = new CreateElement('button', 'cancel','table', baseDiv ,'Cancel last win line');
+        const cancelLastWinLinBtn = createCancelButton.createElement();
+        document.querySelector(cancelLastWinLinBtn).addEventListener('click', () => {
+            if (allWinLines.length != 0){
+                allWinLines.pop();
+                ++firstPayoutsPage.amountWinLines;
+                document.querySelector(headCounter).textContent = `${firstPayoutsPage.amountWinLines} winning lines to choose`;
+            } else {
+                alert("You don't have any win lines");
+            }
+
+        })
 
         document.querySelector(btnElement).addEventListener('click', (e) => {
             e.preventDefault();
@@ -78,7 +74,6 @@ enterParametersButton.addEventListener('click', (e) =>{
                     selectedWinLine.push(x, y);
                 }
             })
-
             if (selectedWinLine.length) {
                 let varWinSymbol = [];
                 selectedWinLine.forEach(item => {
@@ -94,6 +89,7 @@ enterParametersButton.addEventListener('click', (e) =>{
                 if (firstPayoutsPage.amountWinLines === 0){
                     document.querySelector(div).remove();
                     document.querySelector(btnElement).remove();
+                    document.querySelector(cancelLastWinLinBtn).remove();
                     const createDivElement = new CreateElement('div', 'result', 'table', baseDiv);
                     const resultDiv = createDivElement.createElement();
 
@@ -109,7 +105,6 @@ enterParametersButton.addEventListener('click', (e) =>{
                             resultString += s.join('') + ' '
                         });
                         resultString = resultString.trim();
-                        //console.log(resultString)
 
                         const createInputElm = new CreateElement('input', `text${count}`, "table", document.querySelector(resultDiv), false);
                         resultSymbolsSuite = createInputElm.createElement();
@@ -117,7 +112,6 @@ enterParametersButton.addEventListener('click', (e) =>{
                         document.querySelector(resultSymbolsSuite).style.width = `${(firstPayoutsPage.lineSize.height * 11)*firstPayoutsPage.lineSize.width}px`
                         document.querySelector(resultDiv).append(document.querySelector(resultSymbolsSuite));
                         document.querySelector(resultSymbolsSuite).value = resultString;
-
                         count++;
                     });
 
