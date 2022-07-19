@@ -56,16 +56,17 @@ class CreateWinLines{
 
     createWinLines(){
         this.div = document.createElement('div');
-        console.log(this.div)
+       // console.log(this.div)
         this.div.classList.add(this.classList);
         this.div.style.display = this.display;
         this.div.style.height = "40px";
+        this.div.count = 1;
         if (this.display === "table") {
             this.div.style.width = "40px";
             this.div.style.backgroundColor = "yellow";
             this.div.style.float = "left";
             this.div.style.border = "1px solid darkblue"
-            console.log("x")
+           // console.log("x")
             //console.log(this.append)
             this.div.x = this.x;
             this.div.y = this.y;

@@ -47,10 +47,23 @@ enterParametersButton.addEventListener('click', (e) =>{
        const winLineButtons = document.querySelectorAll('.winLineButtons');
        winLineButtons.forEach(btn => {
            btn.addEventListener('click', () => {
-              btn.style.backgroundColor = 'red';
-              const y = btn.y;
-              const x = btn.x;
-              selectedWinLine.push(x, y);
+               //btn.count++;
+               btn.style.backgroundColor === 'yellow' ? btn.style.backgroundColor = 'red': btn.style.backgroundColor = 'yellow';
+               // if (btn.count % 2 === 0) {
+               //     btn.style.backgroundColor = 'red';
+               //     // const y = btn.y;
+               //     // const x = btn.x;
+               //     // selectedWinLine.push(x, y);
+               //     // console.log(selectedWinLine);
+               //     // console.log(btn.count);
+               // } else {
+               //     btn.style.backgroundColor = 'yellow';
+               //     // selectedWinLine.pop();
+               //     // selectedWinLine.pop();
+               //     // console.log(selectedWinLine);
+               //     // console.log(btn.count);
+               // }
+
             })
        })
 
@@ -58,6 +71,14 @@ enterParametersButton.addEventListener('click', (e) =>{
         document.querySelector(btnElement).addEventListener('click', (e) => {
             e.preventDefault();
             let count = 0;
+            winLineButtons.forEach(btn => {
+                if ( btn.style.backgroundColor === 'red'){
+                    const y = btn.y;
+                    const x = btn.x;
+                    selectedWinLine.push(x, y);
+                }
+            })
+
             if (selectedWinLine.length) {
                 let varWinSymbol = [];
                 selectedWinLine.forEach(item => {
@@ -88,7 +109,7 @@ enterParametersButton.addEventListener('click', (e) =>{
                             resultString += s.join('') + ' '
                         });
                         resultString = resultString.trim();
-                        console.log(resultString)
+                        //console.log(resultString)
 
                         const createInputElm = new CreateElement('input', `text${count}`, "table", document.querySelector(resultDiv), false);
                         resultSymbolsSuite = createInputElm.createElement();
