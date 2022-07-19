@@ -3,8 +3,6 @@ class FirstPayoutsPage {
     reelsHeightText = document.getElementById('symbolsNumber');
     symbolsText = document.getElementById('symbol');
     winLinesAmountText = document.getElementById('winLinesText')
-    //enterParametersButton = document.querySelector(`[class="enter"]`);
-    //baseDiv = document.querySelector('.base');
 
     amountWinLines = +this.winLinesAmountText.value;
 
@@ -16,7 +14,7 @@ class FirstPayoutsPage {
      symbols = this.symbolsText.value.toUpperCase().trim();
      correctSymbols = this.symbols.split(' ');
 
-     upDate(){
+     upDateInputInformation(){
          this.lineSize = {
              width: +this.reelsNumberText.value,
              height: +this.reelsHeightText.value
@@ -37,12 +35,11 @@ class CreateElement{
         this.text = text;
     }
     createElement(){
-        //console.log(this.element)
-        this.element ? this.element = document.createElement(this.element) : this.createElement();
+        this.element = document.createElement(this.element);
         this.element.classList.add(this.className);
         this.text ? this.element.textContent = this.text : 0;
         this.element.style.display = this.display;
-        this.append ? this.append.append(this.element) : this.createElement();
+        this.append.append(this.element);
         return `.${this.className}`
     }
 
@@ -78,5 +75,42 @@ class CreateWinLines{
             this.div.style.width = `${firstPayoutsPage.lineSize.width * 42}px`;
             this.div.style.backgroundColor = "yellow";
         }
+    }
+}
+
+class FinalePayoutsPage {
+    constructor(lineSize, winLine, symbols) {
+        this.lineSize = lineSize;
+        this.winLine = winLine;
+        this.symbols = symbols;
+    }
+    resultCalculation(){
+        const results = [];
+
+        this.symbols.forEach((symbol, index, arr) => {
+            this.winLine.forEach((line) => {
+                const emptyTable = [];
+                const createEmptyTable = () => {
+                    for (let j = 0; j < this.lineSize.width; j++) {
+                        emptyTable.push([]);
+                        for (let k = 0; k < this.lineSize.height; k++) {
+                            emptyTable[j].push(0);
+                        }
+                    }
+                }
+                createEmptyTable();
+
+                const n1 = index + 1 >= arr.length - 1 ? 0 : index + 1;
+                const n2 = index + 2 >= arr.length - 1 ? 1 : index + 2;
+
+                emptyTable.forEach((tableLine, y) => tableLine.forEach((z, col) => emptyTable[y][col] = y % 2 ? this.symbols[n1] : this.symbols[n2]));
+                const cheatArray = [].concat(emptyTable);
+                for (let m = 0; m < line.length; m += 2) {
+                    cheatArray[line[m]][line[m + 1]] = symbol;
+                }
+                results.push(cheatArray);
+            })
+        })
+        return results
     }
 }
