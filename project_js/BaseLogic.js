@@ -23,7 +23,7 @@ let checkBox = false;
 enterParametersButton.addEventListener('click', (e) =>{
     e.preventDefault();
     firstPayoutsPage.upDateInputInformation();
-    (patternCheckBox.checked && !firstPayoutsPage.templatesAmount) ? checkBox = true : alert("You need to select template or turn off 'Patterns' checkbox");
+    (patternCheckBox.checked && firstPayoutsPage.templatesAmount > 0 ) ? checkBox = true : alert("You need to select template or turn off 'Patterns' checkbox");
     if (firstPayoutsPage.lineSize.width&& firstPayoutsPage.lineSize.height && firstPayoutsPage.symbols && firstPayoutsPage.amountWinLines) {
        divReels.remove();
 
@@ -92,7 +92,9 @@ enterParametersButton.addEventListener('click', (e) =>{
                 if (checkBox === true){
                     console.log(varWinSymbol)
                     let patternCalculate = new PatternCalculate(varWinSymbol, firstPayoutsPage.lineSize.width, firstPayoutsPage.lineSize.height);
-                    varWinSymbol = patternCalculate.createLinesForCheat();
+                    console.log(varWinSymbol)
+                    varWinSymbol = patternCalculate.createSymbolsLinesForCheat();
+                    console.log(varWinSymbol)
                     varWinSymbol.forEach(i => {
                         allWinLines.push(i);
                     })
@@ -127,7 +129,6 @@ enterParametersButton.addEventListener('click', (e) =>{
                             resultString += s.join('') + ' '
                         });
                         resultString = resultString.trim();
-
                         const createInputElm = new CreateElement('input', `text${count}`, "table", document.querySelector(resultDiv), false);
                         resultSymbolsSuite = createInputElm.createElement();
 
