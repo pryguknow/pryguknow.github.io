@@ -131,33 +131,33 @@ class PatternCalculate {
     }
     result = [];
 
-    createLinesForCheat(){
+    createSymbolsLinesForCheat(){
         const arrX = [];
         const arrY = [];
         const resultX = []
-        let pattWinLine = [];
-        let runningX = [];
+        let patternWinLine = [];
+        let runX = [];
         this.patternWinLine.forEach((i) => {
-            pattWinLine.push(i);
+            patternWinLine.push(i);
         })
-        this.result.push(this.patternWinLine);
-        console.log(pattWinLine)
-        pattWinLine.forEach((i, index) => {((index + 1) % 2 === 0) ? arrY.push(i) : arrX.push(i);})
+        //this.result.push(this.patternWinLine);
+        //console.log(patternWinLine)
+        patternWinLine.forEach((i, index) => {((index + 1) % 2 === 0) ? arrY.push(i) : arrX.push(i);})
         let moveX = Math.max(...arrX);
         let moveY = Math.max(...arrY);
         moveX = (this.wightReel - 1) - moveX;
         moveY = (this.heightReel - 1) - moveY;
 
-        if (moveY > 0) {
-            this.movementY(moveY, arrY, arrX);
-        }
+        // if (moveY > 0) {
+        //     this.movementY(moveY, arrY, arrX);
+        // }
         if (moveX > 0){
-            for (let j = 1; j < moveX + 1; j++) {
-                runningX = [];
+            for (let j = 0; j < moveX + 1; j++) {
+                runX = [];
                 arrX.forEach(i => {
-                    runningX.push(i + j);
+                    runX.push(i + j);
                 })
-                resultX.push(runningX);
+                resultX.push(runX);
             }
 
             if (moveY > 0){
@@ -181,7 +181,7 @@ class PatternCalculate {
     }
     movementY(moveY, arrY, arrX) {
         let resultY = [];
-        for (let j = 1; j < moveY + 1; j++) {
+        for (let j = 0; j < moveY + 1; j++) {
             let runningY = [];
             arrY.forEach(i => {
                 i += j;
