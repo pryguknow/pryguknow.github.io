@@ -13,22 +13,37 @@
     <div id="reels">
         <h1>Payouts</h1>
         <form class="reelsForm">
-            <p>Enter the number of reels:</p>
-            <p><input id="reelsText" type="number" min="1" placeholder="Number of reels"></p>
-            <p>Enter number of symbols on the reel</p>
-            <p><input id="symbolsNumber" type="number" min="1" placeholder="Number of symbols"></p>
-            <p>Enter number of win lines</p>
-            <p><input id="winLinesText" type="number" min="1" placeholder="Number of win lines"></p>
-            <p>Enter symbols (separated by space)</p>
-            <p><input id="symbol" type="text" size="30" placeholder="Example: J S G"></p>
-            <p><button type="submit" class="enter">Enter</button></p>
+            <div class = "tabs">
+                <p>Enter the number of reels:</p>
+                <p><input id="reelsText" type="number" min="1" placeholder="Number of reels"></p>
+            </div>
+            <div class = "tabs">
+                <p>Enter number of symbols on the reel</p>
+                <p><input id="symbolsNumber" type="number" min="1" placeholder="Number of symbols"></p>
+            </div>
+            <div class = "tabs">
+                <p>Enter number of win lines</p>
+                <p><input id="winLinesText" type="number" min="1" placeholder="Number of win lines"></p>
+            </div>
+            <div class = "tabs">
+                <p>Enter symbols (separated by space)</p>
+                <p><input id="symbol" type="text" size="30" placeholder="Example: J S G"></p>
+            </div>
+            <div class = "tabs">
+                <p>Enter number of templates(optional)</p>
+                <p><input id ="patterns" type="number" min="0" placeholder="Number of templates(optional)">
+                <input id="patternCheckbox" type="checkbox" name="patternCheckbox">
+                <label for="patternCheckbox">Patterns</label></p>
+                <p><button type="submit" class="enter">Enter</button></p>
+            </div>
+
         </form>
     </div>
     </div>
 </div>
 
 
-<h6>v.0.1.3</h6>
+<h6>v.0.1.5</h6>
 <script src="project_js/ClassesAndFunctions.js"></script>
 <script src="project_js/BaseLogic.js"></script>
 </body>

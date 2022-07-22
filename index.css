@@ -16,7 +16,7 @@ div.base{
 div[id="reels"]{
     background-color: lavender;
     border: 2px solid darkblue;
-    height: 400px;
+    height: 550px;
     width: 300px;
     text-align:center;
     margin-right: 100px;
@@ -26,5 +26,13 @@ div[id="reels"]{
 }
 form{
     text-align:center;
+}
+
+.patternCheckbox{
+    width: 10px;
+}
+
+div.tabs{
+    border-bottom: 2px solid darkblue
 }
 

@@ -2,7 +2,8 @@ class FirstPayoutsPage {
     reelsNumberText = document.getElementById('reelsText');
     reelsHeightText = document.getElementById('symbolsNumber');
     symbolsText = document.getElementById('symbol');
-    winLinesAmountText = document.getElementById('winLinesText')
+    winLinesAmountText = document.getElementById('winLinesText');
+    templatesAmountText = document.getElementById('patterns');
 
     amountWinLines = +this.winLinesAmountText.value;
 
@@ -13,6 +14,7 @@ class FirstPayoutsPage {
 
      symbols = this.symbolsText.value.toUpperCase().trim();
      correctSymbols = this.symbols.split(' ');
+     templatesAmount = +this.templatesAmountText.value;
 
      upDateInputInformation(){
          this.lineSize = {
@@ -21,7 +23,8 @@ class FirstPayoutsPage {
          }
          this.amountWinLines = +this.winLinesAmountText.value;
          this.symbols = this.symbolsText.value.toUpperCase().trim();
-         this.correctSymbols = this.symbols.split(' ');
+         this.correctSymbols = this.symbols.split(' ')
+         this.templatesAmount = +this.templatesAmountText.value;
      }
 
 }
@@ -109,9 +112,93 @@ class FinalePayoutsPage {
                 for (let m = 0; m < line.length; m += 2) {
                     cheatArray[line[m]][line[m + 1]] = symbol;
                 }
+                cheatArray.forEach(winLine => {winLine.reverse();})
                 results.push(cheatArray);
             })
         })
         return results
     }
+}
+
+
+
+class PatternCalculate {
+    constructor(patternWinLine, wightReel, heightReel) {
+        this.patternWinLine = patternWinLine;
+        this.wightReel = wightReel;
+        this.heightReel = heightReel;
+
+    }
+    result = [];
+
+    createLinesForCheat(){
+        const arrX = [];
+        const arrY = [];
+        const resultX = []
+        let pattWinLine = [];
+        let runningX = [];
+        this.patternWinLine.forEach((i) => {
+            pattWinLine.push(i);
+        })
+        this.result.push(this.patternWinLine);
+        console.log(pattWinLine)
+        pattWinLine.forEach((i, index) => {((index + 1) % 2 === 0) ? arrY.push(i) : arrX.push(i);})
+        let moveX = Math.max(...arrX);
+        let moveY = Math.max(...arrY);
+        moveX = (this.wightReel - 1) - moveX;
+        moveY = (this.heightReel - 1) - moveY;
+
+        if (moveY > 0) {
+            this.movementY(moveY, arrY, arrX);
+        }
+        if (moveX > 0){
+            for (let j = 1; j < moveX + 1; j++) {
+                runningX = [];
+                arrX.forEach(i => {
+                    runningX.push(i + j);
+                })
+                resultX.push(runningX);
+            }
+
+            if (moveY > 0){
+                resultX.forEach(i => {
+                    this.movementY(moveY, arrY, i)
+                })
+            } else {
+                resultX.forEach(running => {
+                    let pattWinLine = [];
+                    for (let k = 0; k < arrX.length; k++) {
+                        pattWinLine.push(running[k]);
+                        pattWinLine.push(arrY[k]);
+                    }
+
+                    this.result.push(pattWinLine)
+                })
+            }
+        }
+        return this.result;
+
+    }
+    movementY(moveY, arrY, arrX) {
+        let resultY = [];
+        for (let j = 1; j < moveY + 1; j++) {
+            let runningY = [];
+            arrY.forEach(i => {
+                i += j;
+                runningY.push(i);
+            })
+            resultY.push(runningY);
+
+        }
+        resultY.forEach(running => {
+                let pattWinLine = [];
+                for (let k = 0; k < arrY.length; k++) {
+                    pattWinLine.push(arrX[k]);
+                    pattWinLine.push(running[k]);
+                }
+
+                this.result.push(pattWinLine)
+        })
+    }
+
 }
