@@ -69,7 +69,7 @@ enterParametersButton.addEventListener('click', (e) =>{
         const createCancelButton = new CreateElement('button', 'cancel','table', baseDiv ,'Cancel last win line');
         const cancelLastWinLinBtn = createCancelButton.createElement();
         document.querySelector(cancelLastWinLinBtn).addEventListener('click', () => {
-            if (allWinLines.length != 0){
+            if (allWinLines.length > 0){
                 allWinLines.pop();
                 ++firstPayoutsPage.amountWinLines;
                 document.querySelector(headCounter).textContent = `${firstPayoutsPage.amountWinLines} winning lines/templates to choose`;
@@ -97,15 +97,11 @@ enterParametersButton.addEventListener('click', (e) =>{
                     varWinSymbol.push(item);
                 })
                 if (checkBox === true){
-                    console.log(varWinSymbol)
                     let patternCalculate = new PatternCalculate(varWinSymbol, firstPayoutsPage.lineSize.width, firstPayoutsPage.lineSize.height);
-                    console.log(varWinSymbol)
                     varWinSymbol = patternCalculate.createSymbolsLinesForCheat();
-                    console.log(varWinSymbol)
                     varWinSymbol.forEach(i => {
                         allWinLines.push(i);
                     })
-                    //console.log(varWinSymbol);
                     document.querySelector(headCounter).textContent = `${firstPayoutsPage.templatesAmount - 1} template(s) need to choose`;
                     --firstPayoutsPage.templatesAmount
                 }else{
@@ -127,7 +123,10 @@ enterParametersButton.addEventListener('click', (e) =>{
                     const finaleResult = new FinalePayoutsPage(firstPayoutsPage.lineSize, allWinLines, firstPayoutsPage.correctSymbols)
                     resultSymbols = finaleResult.resultCalculation();
 
-                    const createTextCountElement = new CreateElement('div', 'textCounter', 'table', baseDiv, `You have ${firstPayoutsPage.correctSymbols.length * firstPayoutsPage.amountWinLines} win lines for cheat`);
+                    const createParentDiv = new CreateElement('div', 'parentDiv', 'table', baseDiv, false);
+                    const parentDiv = createParentDiv.createElement();
+
+                    const createTextCountElement = new CreateElement('div', 'textCounter', 'table', document.querySelector(parentDiv), `You have ${firstPayoutsPage.correctSymbols.length * firstPayoutsPage.amountWinLines} win lines for cheat`);
                     createTextCountElement.createElement();
 
                     let resultString = '';
@@ -139,7 +138,7 @@ enterParametersButton.addEventListener('click', (e) =>{
                         });
                         resultString = resultString.trim();
 
-                        const createBaseDivElement = new CreateElement('div', 'result', 'block', baseDiv);
+                        const createBaseDivElement = new CreateElement('div', 'result', 'block', document.querySelector(parentDiv));
                         const createBaseDiv = createBaseDivElement.createElement();
 
                         const createResultDiv = new CreateElement('div', `resDiv${count}`, 'table', document.querySelector(createBaseDiv))
