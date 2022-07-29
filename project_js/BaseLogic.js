@@ -16,6 +16,7 @@ let resultSymbols;
 let resultSymbolsSuite;
 let countText;
 let checkBox = false;
+let copyBtn;
 
 
 
@@ -23,7 +24,13 @@ let checkBox = false;
 enterParametersButton.addEventListener('click', (e) =>{
     e.preventDefault();
     firstPayoutsPage.upDateInputInformation();
-    (patternCheckBox.checked && firstPayoutsPage.templatesAmount > 0 ) ? checkBox = true : alert("You need to select template or turn off 'Patterns' checkbox");
+    if (patternCheckBox.checked){
+        if (firstPayoutsPage.templatesAmount > 0){
+            checkBox = true;
+        }else{
+            alert("You need to select template or turn off 'Patterns' checkbox");
+        }
+    }
     if (firstPayoutsPage.lineSize.width&& firstPayoutsPage.lineSize.height && firstPayoutsPage.symbols && firstPayoutsPage.amountWinLines) {
        divReels.remove();
 
@@ -99,7 +106,7 @@ enterParametersButton.addEventListener('click', (e) =>{
                         allWinLines.push(i);
                     })
                     //console.log(varWinSymbol);
-                    document.querySelector(headCounter).textContent = `${firstPayoutsPage.templatesAmount} template(s) need to choose`;
+                    document.querySelector(headCounter).textContent = `${firstPayoutsPage.templatesAmount - 1} template(s) need to choose`;
                     --firstPayoutsPage.templatesAmount
                 }else{
                     allWinLines.push(varWinSymbol);
@@ -114,8 +121,7 @@ enterParametersButton.addEventListener('click', (e) =>{
                     document.querySelector(div).remove();
                     document.querySelector(btnElement).remove();
                     document.querySelector(cancelLastWinLinBtn).remove();
-                    const createDivElement = new CreateElement('div', 'result', 'table', baseDiv);
-                    const resultDiv = createDivElement.createElement();
+
 
 
                     const finaleResult = new FinalePayoutsPage(firstPayoutsPage.lineSize, allWinLines, firstPayoutsPage.correctSymbols)
@@ -129,14 +135,38 @@ enterParametersButton.addEventListener('click', (e) =>{
                             resultString += s.join('') + ' '
                         });
                         resultString = resultString.trim();
+
+                        const createBaseDivElement = new CreateElement('div', 'result', 'table', baseDiv);
+                        const createBaseDiv = createBaseDivElement.createElement();
+
+                        const createResultDiv = new CreateElement('div', `resDiv${count}`, 'table', document.querySelector(createBaseDiv))
+                        const resultDiv = createResultDiv.createElement();
+
                         const createInputElm = new CreateElement('input', `text${count}`, "table", document.querySelector(resultDiv), false);
                         resultSymbolsSuite = createInputElm.createElement();
+                        document.querySelector(resultSymbolsSuite).countEl = count;
+
+                        const createCopyBtn = new CreateElement('button', `copyBtn`, 'table', document.querySelector(resultDiv), "Copy");
+                        copyBtn = createCopyBtn.createElement();
+                        document.querySelector(copyBtn).style.float = "left";
+                        document.querySelector(copyBtn).countEl = count;
+                        document.querySelector(copyBtn).style.marginRight = "5px";
 
                         document.querySelector(resultSymbolsSuite).style.width = `${(firstPayoutsPage.lineSize.height * 11)*firstPayoutsPage.lineSize.width}px`
-                        document.querySelector(resultDiv).append(document.querySelector(resultSymbolsSuite));
+                        //document.querySelector(createBaseDiv).append(document.querySelector(resultSymbolsSuite));
                         document.querySelector(resultSymbolsSuite).value = resultString;
+
                         count++;
                     });
+                    document.querySelectorAll(copyBtn).forEach(btn =>{
+                        btn.addEventListener('click', e => {
+                            e.preventDefault();
+                            const textEl = btn.previousSibling;
+                            textEl.select();
+                            document.execCommand('copy');
+                        })
+                    })
+
                     const createTextCountElement = new CreateElement('div', 'textCounter', 'table', baseDiv, `You have ${count + firstPayoutsPage.correctSymbols.length} win lines for cheat`);
                     createTextCountElement.createElement();
 

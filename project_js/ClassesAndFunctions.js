@@ -83,10 +83,11 @@ class CreateWinLines{
 }
 
 class FinalePayoutsPage {
-    constructor(lineSize, winLine, symbols) {
+    constructor(lineSize, winLine, symbols, inputForCopy) {
         this.lineSize = lineSize;
         this.winLine = winLine;
         this.symbols = symbols;
+        this.inputForCopy = inputForCopy;
     }
     resultCalculation(){
         const results = [];
@@ -117,6 +118,11 @@ class FinalePayoutsPage {
             })
         })
         return results
+    }
+
+    copyFinalText() {
+        this.inputForCopy.select();
+        document.execCommand("copy");
     }
 }
 
@@ -200,5 +206,4 @@ class PatternCalculate {
                 this.result.push(pattWinLine)
         })
     }
-
 }
