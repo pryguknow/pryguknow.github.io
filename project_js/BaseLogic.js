@@ -69,7 +69,7 @@ enterParametersButton.addEventListener('click', (e) =>{
         const createCancelButton = new CreateElement('button', 'cancel','table', baseDiv ,'Cancel last win line');
         const cancelLastWinLinBtn = createCancelButton.createElement();
         document.querySelector(cancelLastWinLinBtn).addEventListener('click', () => {
-            if (allWinLines.length != 0){
+            if (allWinLines.length > 0){
                 allWinLines.pop();
                 ++firstPayoutsPage.amountWinLines;
                 document.querySelector(headCounter).textContent = `${firstPayoutsPage.amountWinLines} winning lines/templates to choose`;
@@ -97,15 +97,11 @@ enterParametersButton.addEventListener('click', (e) =>{
                     varWinSymbol.push(item);
                 })
                 if (checkBox === true){
-                    console.log(varWinSymbol)
                     let patternCalculate = new PatternCalculate(varWinSymbol, firstPayoutsPage.lineSize.width, firstPayoutsPage.lineSize.height);
-                    console.log(varWinSymbol)
                     varWinSymbol = patternCalculate.createSymbolsLinesForCheat();
-                    console.log(varWinSymbol)
                     varWinSymbol.forEach(i => {
                         allWinLines.push(i);
                     })
-                    //console.log(varWinSymbol);
                     document.querySelector(headCounter).textContent = `${firstPayoutsPage.templatesAmount - 1} template(s) need to choose`;
                     --firstPayoutsPage.templatesAmount
                 }else{
@@ -127,6 +123,12 @@ enterParametersButton.addEventListener('click', (e) =>{
                     const finaleResult = new FinalePayoutsPage(firstPayoutsPage.lineSize, allWinLines, firstPayoutsPage.correctSymbols)
                     resultSymbols = finaleResult.resultCalculation();
 
+                    const createParentDiv = new CreateElement('div', 'parentDiv', 'table', baseDiv, false);
+                    const parentDiv = createParentDiv.createElement();
+
+                    const createTextCountElement = new CreateElement('div', 'textCounter', 'table', document.querySelector(parentDiv), `You have ${firstPayoutsPage.correctSymbols.length * firstPayoutsPage.amountWinLines} win lines for cheat`);
+                    createTextCountElement.createElement();
+
                     let resultString = '';
 
                     resultSymbols.forEach(cheat => {
@@ -136,24 +138,20 @@ enterParametersButton.addEventListener('click', (e) =>{
                         });
                         resultString = resultString.trim();
 
-                        const createBaseDivElement = new CreateElement('div', 'result', 'table', baseDiv);
+                        const createBaseDivElement = new CreateElement('div', 'result', 'block', document.querySelector(parentDiv));
                         const createBaseDiv = createBaseDivElement.createElement();
 
                         const createResultDiv = new CreateElement('div', `resDiv${count}`, 'table', document.querySelector(createBaseDiv))
                         const resultDiv = createResultDiv.createElement();
 
-                        const createInputElm = new CreateElement('input', `text${count}`, "table", document.querySelector(resultDiv), false);
+                        const createInputElm = new CreateElement('input', `text${count}`, "table-cell", document.querySelector(resultDiv), false);
                         resultSymbolsSuite = createInputElm.createElement();
                         document.querySelector(resultSymbolsSuite).countEl = count;
 
-                        const createCopyBtn = new CreateElement('button', `copyBtn`, 'table', document.querySelector(resultDiv), "Copy");
+                        const createCopyBtn = new CreateElement('button', `copyBtn`, 'table-cell', document.querySelector(resultDiv), "Copy");
                         copyBtn = createCopyBtn.createElement();
-                        document.querySelector(copyBtn).style.float = "left";
                         document.querySelector(copyBtn).countEl = count;
-                        document.querySelector(copyBtn).style.marginRight = "5px";
-
                         document.querySelector(resultSymbolsSuite).style.width = `${(firstPayoutsPage.lineSize.height * 11)*firstPayoutsPage.lineSize.width}px`
-                        //document.querySelector(createBaseDiv).append(document.querySelector(resultSymbolsSuite));
                         document.querySelector(resultSymbolsSuite).value = resultString;
 
                         count++;
@@ -166,10 +164,6 @@ enterParametersButton.addEventListener('click', (e) =>{
                             document.execCommand('copy');
                         })
                     })
-
-                    const createTextCountElement = new CreateElement('div', 'textCounter', 'table', baseDiv, `You have ${count + firstPayoutsPage.correctSymbols.length} win lines for cheat`);
-                    createTextCountElement.createElement();
-
 
                 }
             } else {

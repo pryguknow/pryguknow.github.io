@@ -59,7 +59,6 @@ class CreateWinLines{
 
     createWinLines(){
         this.div = document.createElement('div');
-       // console.log(this.div)
         this.div.classList.add(this.classList);
         this.div.style.display = this.display;
         this.div.style.height = "40px";
@@ -69,8 +68,6 @@ class CreateWinLines{
             this.div.style.backgroundColor = "yellow";
             this.div.style.float = "left";
             this.div.style.border = "1px solid darkblue"
-           // console.log("x")
-            //console.log(this.append)
             this.div.x = this.x;
             this.div.y = this.y;
             this.append.append(this.div);
@@ -83,11 +80,10 @@ class CreateWinLines{
 }
 
 class FinalePayoutsPage {
-    constructor(lineSize, winLine, symbols, inputForCopy) {
+    constructor(lineSize, winLine, symbols) {
         this.lineSize = lineSize;
         this.winLine = winLine;
         this.symbols = symbols;
-        this.inputForCopy = inputForCopy;
     }
     resultCalculation(){
         const results = [];
@@ -119,11 +115,6 @@ class FinalePayoutsPage {
         })
         return results
     }
-
-    copyFinalText() {
-        this.inputForCopy.select();
-        document.execCommand("copy");
-    }
 }
 
 
@@ -146,17 +137,13 @@ class PatternCalculate {
         this.patternWinLine.forEach((i) => {
             patternWinLine.push(i);
         })
-        //this.result.push(this.patternWinLine);
-        //console.log(patternWinLine)
         patternWinLine.forEach((i, index) => {((index + 1) % 2 === 0) ? arrY.push(i) : arrX.push(i);})
         let moveX = Math.max(...arrX);
         let moveY = Math.max(...arrY);
         moveX = (this.wightReel - 1) - moveX;
         moveY = (this.heightReel - 1) - moveY;
 
-        // if (moveY > 0) {
-        //     this.movementY(moveY, arrY, arrX);
-        // }
+
         if (moveX > 0){
             for (let j = 0; j < moveX + 1; j++) {
                 runX = [];
