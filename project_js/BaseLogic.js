@@ -7,7 +7,7 @@ const enterParametersButton = document.querySelector(`[class="enter"]`);
 const baseDiv = document.querySelector('.base');
 let patternCheckBox = document.getElementById('patternCheckbox');
 
-const allWinLines = [];
+let allWinLines = [];
 let createWinLinesDiv;
 let createWinLinesY;
 let createWinLinesX;
@@ -24,25 +24,28 @@ let copyBtn;
 enterParametersButton.addEventListener('click', (e) =>{
     e.preventDefault();
     firstPayoutsPage.upDateInputInformation();
-    if (patternCheckBox.checked){
-        if (firstPayoutsPage.templatesAmount > 0){
+    let amountWinLines = firstPayoutsPage.amountWinLines;
+    let amountTemplates = firstPayoutsPage.templatesAmount;
+    if (patternCheckBox.checked && (amountTemplates > 0)){
             checkBox = true;
-        }else{
+        }else if ((!patternCheckBox.checked && (amountTemplates > 0)) || (patternCheckBox.checked && (amountTemplates <= 0))){
             alert("You need to select template or turn off 'Patterns' checkbox");
         }
-    }
-    if (firstPayoutsPage.lineSize.width&& firstPayoutsPage.lineSize.height && firstPayoutsPage.symbols && firstPayoutsPage.amountWinLines) {
+
+    if (firstPayoutsPage.lineSize.width && firstPayoutsPage.lineSize.height && firstPayoutsPage.symbols && amountWinLines) {
+        console.log(amountWinLines)
        divReels.remove();
 
        createWinLinesDiv = new CreateElement('div', 'winLines', "table", baseDiv);
         const div = createWinLinesDiv.createElement();
         if (patternCheckBox.checked){
-            countText = `You need to select ${firstPayoutsPage.templatesAmount} templates`;
+            countText = `You need to select ${amountTemplates} templates`;
         }else{
-            countText = `You need to select ${firstPayoutsPage.amountWinLines} wining lines`;
+            countText = `You need to select ${amountWinLines} wining lines`;
         }
         const createCountDiv = new CreateElement('div', "headCounter", "block", document.querySelector(div), countText);
         let headCounter = createCountDiv.createElement();
+        document.querySelector(headCounter).style.backgroundColor = "green";
 
         for (let y = 0; y < firstPayoutsPage.lineSize.height; y++){
             createWinLinesY = new CreateWinLines(`symbol${y}`, div, "block", false, false);
@@ -70,17 +73,30 @@ enterParametersButton.addEventListener('click', (e) =>{
             })
        })
 
-//create "Cancel last round" btn and logic
-        const createCancelButton = new CreateElement('button', 'cancel','table-line', document.querySelector(divWithBtns) ,'Cancel last win line');
-        const cancelLastWinLinBtn = createCancelButton.createElement();
+//create "Cancel last round" or "Cancel all pattern" btn and logic
+        let cancelLastWinLinBtn;
+        if (checkBox === true){
+            const createCancelButton = new CreateElement('button', 'cancel','table-line', document.querySelector(divWithBtns) ,'Cancel all pattern');
+            cancelLastWinLinBtn = createCancelButton.createElement();
+        }else {
+            const createCancelButton = new CreateElement('button', 'cancel', 'table-line', document.querySelector(divWithBtns), 'Cancel last win line');
+            cancelLastWinLinBtn = createCancelButton.createElement();
+        }
 
         document.querySelector(cancelLastWinLinBtn).style.margin = '20%';
         document.querySelector(cancelLastWinLinBtn).style.margin = 'auto';
         document.querySelector(cancelLastWinLinBtn).addEventListener('click', () => {
             if (allWinLines.length > 0){
-                allWinLines.pop();
-                ++firstPayoutsPage.amountWinLines;
-                document.querySelector(headCounter).textContent = `${firstPayoutsPage.amountWinLines} winning lines/templates to choose`;
+                console.log(checkBox)
+                if (checkBox === true){
+                    allWinLines = [];
+                    amountTemplates = firstPayoutsPage.templatesAmount;
+                    document.querySelector(headCounter).textContent = `${amountTemplates} template(s) to choose`;
+                } else {
+                    allWinLines.pop();
+                    ++amountWinLines;
+                    document.querySelector(headCounter).textContent = `${amountWinLines} winning(s) lines to choose`;
+                }
             } else {
                 alert("You don't have any win line");
             }
@@ -110,19 +126,19 @@ enterParametersButton.addEventListener('click', (e) =>{
                     varWinSymbol.forEach(i => {
                         allWinLines.push(i);
                     })
-                    document.querySelector(headCounter).textContent = `${firstPayoutsPage.templatesAmount - 1} template(s) need to choose`;
-                    --firstPayoutsPage.templatesAmount
+                    document.querySelector(headCounter).textContent = `${amountTemplates - 1} template(s) need to choose`;
+                    --amountTemplates;
 
                 }else{
                     allWinLines.push(varWinSymbol);
-                    document.querySelector(headCounter).textContent = `${firstPayoutsPage.amountWinLines} winning line(s) to choose`;
-                    --firstPayoutsPage.amountWinLines;
+                    document.querySelector(headCounter).textContent = `${amountWinLines - 1} winning line(s) to choose`;
+                    --amountWinLines;
                 }
                 selectedWinLine = [];
                 winLineButtons.forEach(btn => {
                     btn.style.backgroundColor = "yellow";
                 })
-                if (firstPayoutsPage.amountWinLines === 0 || (checkBox && firstPayoutsPage.templatesAmount === 0)){
+                if (amountWinLines === 0 || (checkBox && amountTemplates === 0)){
                     document.querySelector(div).remove();
                     document.querySelector(btnElement).remove();
                     document.querySelector(cancelLastWinLinBtn).remove();
@@ -134,9 +150,13 @@ enterParametersButton.addEventListener('click', (e) =>{
 
                     const createParentDiv = new CreateElement('div', 'parentDiv', 'table', baseDiv, false);
                     const parentDiv = createParentDiv.createElement();
+                    document.querySelector(parentDiv).style.margin = 'auto';
 
                     const createTextCountElement = new CreateElement('div', 'textCounter', 'table', document.querySelector(parentDiv), `You have ${firstPayoutsPage.correctSymbols.length * firstPayoutsPage.amountWinLines} win lines for cheat`);
-                    createTextCountElement.createElement();
+                    const textCounteElm = createTextCountElement.createElement();
+                    console.log(firstPayoutsPage.correctSymbols.length)
+                    console.log(firstPayoutsPage.amountWinLines)
+                    document.querySelector(textCounteElm).style.backgroundColor = 'yellow';
 
                     let resultString = '';
 
