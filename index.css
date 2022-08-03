@@ -1,7 +1,6 @@
 body{
     margin: 0;
-    background: url("img/Stakelogic-bg.jpeg");
-    background-size: contain;
+    background: url("img/Stakelogic-bg.jpeg") black;
 }
 header {
     height: 50px;
@@ -20,7 +19,7 @@ img#logo {
 
 div.base{
     display: block;
-    height: 700px;
+    height: 900px;
     position: relative;
 
 }

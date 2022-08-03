@@ -17,6 +17,7 @@ let resultSymbolsSuite;
 let countText;
 let checkBox = false;
 let copyBtn;
+let acceptSymbol;
 
 
 
@@ -33,7 +34,6 @@ enterParametersButton.addEventListener('click', (e) =>{
         }
 
     if (firstPayoutsPage.lineSize.width && firstPayoutsPage.lineSize.height && firstPayoutsPage.symbols && amountWinLines) {
-        console.log(amountWinLines)
        divReels.remove();
 
        createWinLinesDiv = new CreateElement('div', 'winLines', "table", baseDiv);
@@ -87,7 +87,6 @@ enterParametersButton.addEventListener('click', (e) =>{
         document.querySelector(cancelLastWinLinBtn).style.margin = 'auto';
         document.querySelector(cancelLastWinLinBtn).addEventListener('click', () => {
             if (allWinLines.length > 0){
-                console.log(checkBox)
                 if (checkBox === true){
                     allWinLines = [];
                     amountTemplates = firstPayoutsPage.templatesAmount;
@@ -154,8 +153,6 @@ enterParametersButton.addEventListener('click', (e) =>{
 
                     const createTextCountElement = new CreateElement('div', 'textCounter', 'table', document.querySelector(parentDiv), `You have ${firstPayoutsPage.correctSymbols.length * firstPayoutsPage.amountWinLines} win lines for cheat`);
                     const textCounteElm = createTextCountElement.createElement();
-                    console.log(firstPayoutsPage.correctSymbols.length)
-                    console.log(firstPayoutsPage.amountWinLines)
                     document.querySelector(textCounteElm).style.backgroundColor = 'yellow';
 
                     let resultString = '';
@@ -179,6 +176,11 @@ enterParametersButton.addEventListener('click', (e) =>{
 
                         const createCopyBtn = new CreateElement('button', `copyBtn`, 'table-cell', document.querySelector(resultDiv), "Copy");
                         copyBtn = createCopyBtn.createElement();
+
+                        const createAcceptSymbol = new CreateElement('div', `acceptSymbol${count}`, 'table-cell', document.querySelector(resultDiv));
+                        const acceptSymbol = createAcceptSymbol.createElement();
+                        document.querySelector(acceptSymbol).style.color = "Green";
+
                         document.querySelector(copyBtn).countEl = count;
                         document.querySelector(resultSymbolsSuite).style.width = `${(firstPayoutsPage.lineSize.height * 11)*firstPayoutsPage.lineSize.width}px`
                         document.querySelector(resultSymbolsSuite).value = resultString;
@@ -191,6 +193,9 @@ enterParametersButton.addEventListener('click', (e) =>{
                             const textEl = btn.previousSibling;
                             textEl.select();
                             document.execCommand('copy');
+                            const symbol = btn.nextSibling;
+                            symbol.innerHTML = '&#10004;';
+                            symbol.style.backgroundColor = "white";
                         })
                     })
 
