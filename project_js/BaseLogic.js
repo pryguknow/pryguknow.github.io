@@ -52,10 +52,15 @@ enterParametersButton.addEventListener('click', (e) =>{
                 createWinLinesX.createWinLines();
             }
         }
+        document.querySelector(div).style.margin = 'auto';
+
+        const creatDivWithBtns = new CreateElement('div', 'btnsDiv', 'table', baseDiv);
+        const divWithBtns = creatDivWithBtns.createElement();
+        document.querySelector(divWithBtns).style.margin = 'auto';
 
 
 // Create submit button
-        const createBtnElement = new CreateElement('button', 'submit', "table", baseDiv, "Enter");
+        const createBtnElement = new CreateElement('button', 'submit', 'table-line', document.querySelector(divWithBtns), "Enter");
         const btnElement = createBtnElement.createElement();
 //logic for btn on winline
        const winLineButtons = document.querySelectorAll('.winLineButtons');
@@ -66,8 +71,11 @@ enterParametersButton.addEventListener('click', (e) =>{
        })
 
 //create "Cancel last round" btn and logic
-        const createCancelButton = new CreateElement('button', 'cancel','table', baseDiv ,'Cancel last win line');
+        const createCancelButton = new CreateElement('button', 'cancel','table-line', document.querySelector(divWithBtns) ,'Cancel last win line');
         const cancelLastWinLinBtn = createCancelButton.createElement();
+
+        document.querySelector(cancelLastWinLinBtn).style.margin = '20%';
+        document.querySelector(cancelLastWinLinBtn).style.margin = 'auto';
         document.querySelector(cancelLastWinLinBtn).addEventListener('click', () => {
             if (allWinLines.length > 0){
                 allWinLines.pop();
@@ -104,6 +112,7 @@ enterParametersButton.addEventListener('click', (e) =>{
                     })
                     document.querySelector(headCounter).textContent = `${firstPayoutsPage.templatesAmount - 1} template(s) need to choose`;
                     --firstPayoutsPage.templatesAmount
+
                 }else{
                     allWinLines.push(varWinSymbol);
                     document.querySelector(headCounter).textContent = `${firstPayoutsPage.amountWinLines} winning line(s) to choose`;

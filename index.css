@@ -1,0 +1,60 @@
+body{
+    margin: 0;
+    background: url("img/Stakelogic-bg.jpeg");
+    background-size: contain;
+}
+header {
+    height: 50px;
+    background-image: url("img/header_background.png");
+    background-size: auto 50px;
+    margin-bottom: 10px;
+    color: #fff;
+    padding: 0;
+
+}
+img#logo {
+    wigth: 50px;
+    height: 50px;
+    position: absolute;
+}
+
+div.base{
+    display: block;
+    height: 700px;
+    position: relative;
+
+}
+
+#reels {
+    background-color: lavender;
+    border: 2px solid darkblue;
+    height: 545px;
+    width: 300px;
+    text-align:center;
+    margin-right: 100px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%)
+}
+form{
+    text-align:center;
+}
+
+.patternCheckbox{
+    width: 10px;
+}
+
+div.tabs{
+    border-bottom: 2px solid darkblue
+}
+
+#version {
+    position: fixed;
+    left: 0; bottom: 0;
+    padding: 5px;
+    color: #fff;
+    width: 100%;
+}
+
+
+
