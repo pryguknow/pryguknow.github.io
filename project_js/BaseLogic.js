@@ -17,7 +17,6 @@ let resultSymbolsSuite;
 let countText;
 let checkBox = false;
 let copyBtn;
-let acceptSymbol;
 
 
 
